@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture portfolio placeholder</title>
+  <desc id="desc">An original architectural facade study with a grid, measured lines and warm stone palette. Replace with Dia Hafed's own work.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#59685D" stroke-opacity=".14" stroke-width="1"/></pattern>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#DED9CE"/><stop offset="1" stop-color="#C9C4B8"/></linearGradient>
+  </defs>
+  <rect width="960" height="1050" fill="#E7E2D7"/>
+  <rect width="960" height="1050" fill="url(#grid)"/>
+  <circle cx="726" cy="220" r="92" fill="#B99A72" opacity=".55"/>
+  <path d="M0 805 220 755 512 790 960 720V1050H0Z" fill="#D2CBBE"/>
+  <path d="M196 766V424l273-186 278 186v342Z" fill="#F2EFE8" stroke="#35443B" stroke-width="7"/>
+  <path d="M165 428 468 215l310 213" fill="none" stroke="#35443B" stroke-width="9"/>
+  <path d="M258 765V478h100v287m84 0V478h100v287m91 0V478h100v287" fill="#B9C1B5" stroke="#35443B" stroke-width="6"/>
+  <path d="M258 548h100m-100 91h100m84-91h100m-100 91h100m91-91h100m-100 91h100" stroke="#F2EFE8" stroke-width="7"/>
+  <path d="M228 768h550M222 800h570" stroke="#35443B" stroke-width="5"/>
+  <path d="M96 846h788M118 875h740" stroke="#A67C52" stroke-width="3" stroke-dasharray="8 10"/>
+  <path d="M114 349V775m-11-426h22m-22 426h22" stroke="#59685D" stroke-width="2"/>
+  <text x="86" y="314" fill="#35443B" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">FACADE / LIGHT STUDY</text>
+  <text x="86" y="930" fill="#35443B" font-family="Arial,sans-serif" font-size="14" letter-spacing="2">PLACEHOLDER ARTWORK — REPLACE WITH DIA'S PROJECT</text>
+  <text x="86" y="976" fill="#59685D" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">DIA HAFED / ARCHITECTURE</text>
+  <path d="M862 105V245m-12-140h24m-24 140h24" stroke="#A67C52" stroke-width="2"/>
+  <text x="850" y="90" fill="#59685D" font-family="Arial,sans-serif" font-size="12" letter-spacing="2" transform="rotate(90 850 90)">SPATIAL STUDY / 01</text>
+</svg>

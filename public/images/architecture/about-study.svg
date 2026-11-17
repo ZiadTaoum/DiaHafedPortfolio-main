@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 920" role="img" aria-labelledby="title desc">
+  <title id="title">Architectural drawing placeholder</title><desc id="desc">A minimal architectural plan and facade illustration; replace with Dia's own portrait or work image.</desc>
+  <defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#59685D" stroke-opacity=".16"/></pattern></defs>
+  <rect width="760" height="920" fill="#E4DFD4"/><rect width="760" height="920" fill="url(#grid)"/>
+  <path d="M95 690V335l278-190 294 190v355Z" fill="#F3F0E8" stroke="#35443B" stroke-width="7"/>
+  <path d="m59 340 314-220 332 220" fill="none" stroke="#35443B" stroke-width="9"/>
+  <path d="M171 690V418h93v272m125 0V418h93v272m126 0V418h93v272" fill="#BDC6BA" stroke="#59685D" stroke-width="5"/>
+  <path d="M171 508h93m125 0h93m126 0h93" stroke="#F3F0E8" stroke-width="6"/>
+  <path d="M95 731h572m-541 27h511" stroke="#A67C52" stroke-width="4"/>
+  <text x="65" y="820" fill="#35443B" font-family="Arial,sans-serif" font-size="16" letter-spacing="2">PROFILE IMAGE / WORK SAMPLE</text>
+  <text x="65" y="854" fill="#59685D" font-family="Arial,sans-serif" font-size="13" letter-spacing="2">TO BE REPLACED WHEN MATERIALS ARE PROVIDED</text>
+</svg>

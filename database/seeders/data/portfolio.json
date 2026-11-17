@@ -1,0 +1,248 @@
+[
+  {
+    "key": "settings",
+    "type": "settings",
+    "title": "Site settings",
+    "subtitle": "",
+    "body": "",
+    "data": {
+      "name": "Dia Youssef Hafed",
+      "role": "Architecture Student",
+      "description": "Dia Youssef Hafed is an architecture student at Lebanese University, Faculty of Fine Arts & Architecture in Tripoli, with experience in architectural drawing, residential design, renovation, and 3D visualization.",
+      "footer": "Architecture, design development & visualization — Akkar, Lebanon.",
+      "cv_label": "Download CV",
+      "portfolio_label": "Full portfolio PDF",
+      "cv": "/cv",
+      "portfolio": ""
+    },
+    "position": 0,
+    "is_visible": true,
+    "items": []
+  },
+  {
+    "key": "hero",
+    "type": "hero",
+    "title": "Architecture shaped by curiosity, craft, and place.",
+    "subtitle": "Architecture / Spatial design",
+    "body": "I’m Dia Youssef Hafed, an architecture student at Lebanese University. I work across design development, technical drawing, and architectural visualization, and I’m eager to keep learning through practice.",
+    "data": {
+      "eyebrow": "Dia Youssef Hafed / Architecture Student",
+      "image": "/images/architecture/hero-study.svg",
+      "image_alt": "Original architectural facade illustration placeholder, to be replaced with Dia's work",
+      "cta_label": "Explore my work",
+      "cta_url": "#projects",
+      "secondary_label": "Let’s work together",
+      "secondary_url": "#contact"
+    },
+    "position": 10,
+    "is_visible": true,
+    "items": []
+  },
+  {
+    "key": "projects",
+    "type": "projects",
+    "title": "Architecture portfolio",
+    "subtitle": "Studies in space, form, and material.",
+    "body": "A small set of speculative concept studies is here to preview the portfolio layout and category filters. These are sample-only design exercises, not verified projects from Dia's CV or built work.",
+    "data": {},
+    "position": 20,
+    "is_visible": true,
+    "items": [
+      {
+        "title": "Courtyard House",
+        "subtitle": "Speculative concept / Residential",
+        "body": "SAMPLE CONCEPT — not a commissioned or built project. A compact home is organized around a planted courtyard, bringing soft daylight and cross-ventilation into the rooms while creating a quiet center for everyday life. Replace this study with a verified project from Dia's portfolio.",
+        "data": {
+          "category": "Residential",
+          "image": "/images/architecture/project-residential.svg",
+          "image_alt": "Speculative residential concept illustration created as portfolio sample data; not a completed project",
+          "plan_image": "/images/architecture/plan-courtyard.svg",
+          "plan_rooms": "10, 14.3, 32, 21.4 | Living room | 6.4 × 3.0 m | Wide glazing opens toward the courtyard, so daylight reaches the back of the room.\n42, 14.3, 48, 21.4 | Kitchen & dining | 9.6 × 3.0 m | One long room for cooking and eating, with a window wall onto the garden edge.\n10, 35.7, 30, 28.6 | Study | 6.0 × 4.0 m | A quiet room on the west side. The courtyard tree filters the afternoon light.\n40, 35.7, 20, 28.6 | Courtyard | 4.0 × 4.0 m | The open centre of the house: planted, shaded and cross-ventilated. Every room borrows its light from here.\n60, 35.7, 30, 28.6 | Bedroom | 6.0 × 4.0 m | Turns toward the courtyard rather than the street, for privacy and soft morning light.\n10, 64.3, 20, 21.4 | Entry | 4.0 × 3.0 m | A compressed threshold. The view into the courtyard only opens once you step inside.\n30, 64.3, 18, 21.4 | Bathroom | 3.6 × 3.0 m | Lit from above by a high window, keeping the room private.\n48, 64.3, 42, 21.4 | Veranda | 8.4 × 3.0 m | A shaded, open edge where the house meets the garden.",
+          "cut_before": "/images/architecture/section-courtyard.svg",
+          "cut_after": "/images/architecture/render-courtyard.svg",
+          "cut_before_label": "Section",
+          "cut_after_label": "Render"
+        }
+      },
+      {
+        "title": "Community Arts House",
+        "subtitle": "Speculative concept / Civic & culture",
+        "body": "SAMPLE CONCEPT — not a commissioned or built project. A welcoming public building is imagined as a sequence of open thresholds, shared rooms, and shaded edges that connect cultural activity with the surrounding neighborhood. Replace this study with a verified project from Dia's portfolio.",
+        "data": {
+          "category": "Civic & Culture",
+          "image": "/images/architecture/project-cultural.svg",
+          "image_alt": "Speculative civic architecture concept illustration created as portfolio sample data; not a completed project"
+        }
+      },
+      {
+        "title": "Lightwell Apartment",
+        "subtitle": "Speculative concept / Interior",
+        "body": "SAMPLE CONCEPT — not a commissioned or built project. This interior study uses a restrained palette, built-in storage, and a lightwell to make a small apartment feel calm, legible, and connected to daylight. Replace this study with a verified project from Dia's portfolio.",
+        "data": {
+          "category": "Interior",
+          "image": "/images/architecture/project-interior.svg",
+          "image_alt": "Speculative interior concept illustration created as portfolio sample data; not a completed project"
+        }
+      },
+      {
+        "title": "Street Commons",
+        "subtitle": "Speculative concept / Urban design",
+        "body": "SAMPLE CONCEPT — not a commissioned or built project. A street retrofit is explored as a chain of small public rooms, with planting, seating, and slower movement making space for daily encounters. Replace this study with a verified project from Dia's portfolio.",
+        "data": {
+          "category": "Urban Design",
+          "image": "/images/architecture/project-urban.svg",
+          "image_alt": "Speculative urban public-space concept illustration created as portfolio sample data; not a completed project"
+        }
+      },
+      {
+        "title": "Material / Memory",
+        "subtitle": "Speculative concept / Research",
+        "body": "SAMPLE CONCEPT — not a commissioned or built project. A material research exercise pairs reused brick, timber, and translucent surfaces to study how texture and filtered light can give a new space a sense of continuity. Replace this study with verified research from Dia's portfolio.",
+        "data": {
+          "category": "Research",
+          "image": "/images/architecture/project-material.svg",
+          "image_alt": "Speculative material and light research illustration created as portfolio sample data"
+        }
+      },
+      {
+        "title": "Garden Room Pavilion",
+        "subtitle": "Speculative concept / Landscape",
+        "body": "SAMPLE CONCEPT — not a commissioned or built project. A lightweight garden pavilion frames views through a planted landscape, using a simple repeated structure to move between shelter and open air. Replace this study with a verified project from Dia's portfolio.",
+        "data": {
+          "category": "Landscape",
+          "image": "/images/architecture/project-garden.svg",
+          "image_alt": "Speculative landscape pavilion concept illustration created as portfolio sample data; not a completed project"
+        }
+      }
+    ]
+  },
+  {
+    "key": "about",
+    "type": "about",
+    "title": "About Dia",
+    "subtitle": "Architecture student · Lebanese University",
+    "body": "Motivated architecture student at the Lebanese University – Faculty of Fine Arts & Architecture, passionate about design development and architectural visualization. Skilled in creating detailed drawings and realistic 3D models, and eager to gain practical experience while developing professional skills.",
+    "data": {
+      "image": "/images/architecture/about-study.svg",
+      "image_alt": "Illustrative architecture drawing placeholder; replace with Dia's portrait or project image"
+    },
+    "position": 30,
+    "is_visible": true,
+    "items": []
+  },
+  {
+    "key": "services",
+    "type": "services",
+    "title": "Highlights & recognition",
+    "subtitle": "Selected achievements from the CV",
+    "body": "",
+    "data": {},
+    "position": 40,
+    "is_visible": true,
+    "items": [
+      {
+        "title": "Architectural visualization",
+        "subtitle": "Recognition",
+        "body": "Recognized for excellence in architectural visualization and rendering.",
+        "data": {}
+      },
+      {
+        "title": "Residential & conceptual design",
+        "subtitle": "Design development",
+        "body": "Developed and presented multiple residential and conceptual design projects.",
+        "data": {}
+      }
+    ]
+  },
+  {
+    "key": "experience",
+    "type": "experience",
+    "title": "Experience",
+    "subtitle": "Architectural practice & renovation",
+    "body": "",
+    "data": {},
+    "position": 50,
+    "is_visible": true,
+    "items": [
+      {
+        "title": "Renovation Project Intern",
+        "subtitle": "3-month internship · Architect Wassim Naghi",
+        "body": "Contributed to renovation project development under the supervision of Architect Wassim Naghi. Assisted with architectural drawings, site visits, and coordination of design updates.",
+        "data": { "period": "3 months · Year not specified", "location": "Lebanon" }
+      },
+      {
+        "title": "Architectural Practice Intern",
+        "subtitle": "3-month internship · Architect Rabih Falou",
+        "body": "Participated in residential project design, prepared technical drawings, and supported project documentation and site follow-ups during a three-month internship.",
+        "data": { "period": "3 months · Year not specified", "location": "Lebanon" }
+      }
+    ]
+  },
+  {
+    "key": "education",
+    "type": "education",
+    "title": "Education",
+    "subtitle": "Education in Akkar & Tripoli, Lebanon",
+    "body": "",
+    "data": {},
+    "position": 60,
+    "is_visible": true,
+    "items": [
+      {
+        "title": "Bachelor of Architecture",
+        "subtitle": "Lebanese University – Faculty of Fine Arts & Architecture",
+        "body": "Currently pursuing a Bachelor of Architecture.",
+        "data": { "period": "2023 – Present", "location": "Tripoli, Lebanon" }
+      },
+      {
+        "title": "General Sciences",
+        "subtitle": "National Orthodox School",
+        "body": "General Sciences studies.",
+        "data": { "period": "2022 – 2023", "location": "Akkar, Lebanon" }
+      },
+      {
+        "title": "Brevet Certificate",
+        "subtitle": "National Orthodox School",
+        "body": "Brevet Certificate.",
+        "data": { "period": "2019 – 2020", "location": "Akkar, Lebanon" }
+      }
+    ]
+  },
+  {
+    "key": "skills",
+    "type": "skills",
+    "title": "Skills & tools",
+    "subtitle": "Design tools & languages",
+    "body": "",
+    "data": {},
+    "position": 70,
+    "is_visible": true,
+    "items": [
+      { "title": "AutoCAD", "subtitle": "CAD drafting", "body": "", "data": { "category": "Design software" } },
+      { "title": "Revit", "subtitle": "BIM modeling", "body": "", "data": { "category": "Design software" } },
+      { "title": "Rhino", "subtitle": "3D modeling", "body": "", "data": { "category": "Design software" } },
+      { "title": "Lumion", "subtitle": "Architectural visualization", "body": "", "data": { "category": "Design software" } },
+      { "title": "Arabic", "subtitle": "Language", "body": "", "data": { "category": "Languages" } },
+      { "title": "French", "subtitle": "Language", "body": "", "data": { "category": "Languages" } },
+      { "title": "English", "subtitle": "Language", "body": "", "data": { "category": "Languages" } }
+    ]
+  },
+  {
+    "key": "contact",
+    "type": "contact",
+    "title": "Start a conversation",
+    "subtitle": "Akkar, Lebanon",
+    "body": "Get in touch to discuss architectural design, visualization, or internship opportunities.",
+    "data": {
+      "email": "diahafed423@gmail.com",
+      "phone": "+961 81 603 442",
+      "location": "Akkar, Lebanon",
+      "form_heading": "Tell me about your project",
+      "submit_label": "Send message",
+      "success_message": "Thank you! Your message has been received."
+    },
+    "position": 80,
+    "is_visible": true,
+    "items": []
+  }
+]

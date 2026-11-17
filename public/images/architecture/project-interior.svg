@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+  <title id="title">Interior architecture placeholder</title><desc id="desc">Abstract interior section and furniture study; replace with a real portfolio project.</desc>
+  <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#59685D" stroke-opacity=".15"/></pattern></defs>
+  <rect width="900" height="650" fill="#E2DDD2"/><rect width="900" height="650" fill="url(#grid)"/>
+  <path d="M130 490V145h550v345" fill="#F3F0E8" stroke="#35443B" stroke-width="7"/>
+  <path d="M130 228h550M410 145v345" fill="none" stroke="#35443B" stroke-width="5"/>
+  <path d="M190 490V270h160v220" fill="#C1C8BD" stroke="#59685D" stroke-width="5"/>
+  <path d="M476 490V330h154v160" fill="#D6C7AF" stroke="#A67C52" stroke-width="5"/>
+  <path d="M451 295h204m-102-50v50" stroke="#A67C52" stroke-width="4"/><circle cx="553" cy="230" r="30" fill="#B99A72" opacity=".6"/>
+  <path d="M105 520h610m-566 18h520" stroke="#35443B" stroke-width="4"/><text x="65" y="590" font-family="Arial,sans-serif" font-size="15" letter-spacing="2" fill="#35443B">INTERIOR / SECTION STUDY — PLACEHOLDER</text>
+</svg>

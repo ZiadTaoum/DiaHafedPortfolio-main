@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+  <title id="title">Speculative garden room pavilion</title><desc id="desc">Original sample illustration of a light timber pavilion in a planted garden.</desc>
+  <defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#59685D" stroke-opacity=".13"/></pattern></defs>
+  <rect width="900" height="650" fill="#E7E1D5"/><rect width="900" height="650" fill="url(#grid)"/>
+  <circle cx="710" cy="125" r="58" fill="#D0AE76" opacity=".8"/><path d="M0 450q150-90 310 0t300 0 290 0v200H0Z" fill="#B8C2AF"/>
+  <path d="m155 270 285-150 305 150" fill="none" stroke="#35443B" stroke-width="12"/><path d="M196 265v245m488-245v245M320 190v318m246-318v318" stroke="#765C43" stroke-width="12"/>
+  <path d="M172 280h590v25H172z" fill="#A67C52"/><path d="M228 307h466v186H228z" fill="#F2EFE8" fill-opacity=".38" stroke="#35443B" stroke-width="3"/>
+  <path d="M90 515h720" stroke="#35443B" stroke-width="4"/><g fill="#71816D" stroke="#35443B" stroke-width="4"><circle cx="123" cy="412" r="38"/><circle cx="785" cy="430" r="46"/><circle cx="276" cy="488" r="24"/><circle cx="638" cy="482" r="28"/></g><path d="M123 450v65m662-19v84m-509-92v44m362-48v48" stroke="#765C43" stroke-width="8"/>
+  <path d="M64 555h772" stroke="#35443B" stroke-width="3"/><text x="64" y="594" font-family="Arial,sans-serif" font-size="15" letter-spacing="2" fill="#35443B">GARDEN ROOM / SAMPLE CONCEPT</text>
+</svg>

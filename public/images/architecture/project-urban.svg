@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+  <title id="title">Speculative urban commons study</title><desc id="desc">Original sample illustration of a planted pedestrian street and public seating.</desc>
+  <defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#59685D" stroke-opacity=".13"/></pattern></defs>
+  <rect width="900" height="650" fill="#E8E2D6"/><rect width="900" height="650" fill="url(#grid)"/>
+  <path d="M0 500 265 325h370L900 500v150H0Z" fill="#C9C4B7"/><path d="M0 535 276 356m348 0 276 179" fill="none" stroke="#F7F2E8" stroke-width="8" stroke-dasharray="18 14"/>
+  <path d="M70 338V195l112-70 112 70v143m30 0V162l115-76 116 76v176" fill="#F2EFE8" stroke="#35443B" stroke-width="5"/><path d="M92 210h160m-160 45h160m66-72h174m-174 48h174" stroke="#A67C52" stroke-width="4"/>
+  <path d="M115 382h150v22H115zm452 0h150v22H567z" fill="#705D49"/><path d="M150 390v35m80-35v35m372-35v35m80-35v35" stroke="#35443B" stroke-width="6"/>
+  <g fill="#71816D" stroke="#35443B" stroke-width="4"><circle cx="360" cy="395" r="34"/><circle cx="470" cy="426" r="30"/><circle cx="760" cy="350" r="38"/><circle cx="88" cy="435" r="34"/></g><path d="M360 429v66m110-39v48m290-122v72M88 469v34" stroke="#765C43" stroke-width="8"/>
+  <path d="M90 552h720" stroke="#35443B" stroke-width="4"/><text x="64" y="593" font-family="Arial,sans-serif" font-size="15" letter-spacing="2" fill="#35443B">STREET COMMONS / SAMPLE CONCEPT</text>
+</svg>

@@ -1,0 +1,6 @@
+@extends('admin.layout')
+@section('content')
+<div class="page-title"><div><p class="eyebrow">YOUR PORTFOLIO, YOUR WAY</p><h1>Make it yours.</h1><p>Edit your content, share new work, and keep your story current.</p></div></div>
+<div class="stats"><div><span>Website sections</span><strong>{{ $sections->where('type','!=','settings')->count() }}</strong></div><div><span>Portfolio projects</span><strong>{{ $projectCount }}</strong></div><a href="{{ route('admin.messages') }}"><span>Unread messages</span><strong>{{ $messageCount }}</strong></a></div>
+<div class="panel"><div class="panel-heading"><h2>Website content</h2><span>Changes appear immediately after saving</span></div><div class="content-list">@foreach($sections as $section)<a class="content-row" href="{{ route('admin.sections.edit',$section) }}"><span class="row-number">{{ str_pad($loop->iteration,2,'0',STR_PAD_LEFT) }}</span><div><h3>{{ $section->type === 'settings' ? 'Site settings, colors & downloads' : ucfirst($section->type) }}</h3><p>{{ $section->title }}</p></div><span class="badge">{{ $section->type === 'settings' ? 'Global' : ($section->is_visible ? 'Visible' : 'Hidden') }}</span><span class="row-count">{{ $section->items_count }} items</span><span>↗</span></a>@endforeach</div></div>
+@endsection

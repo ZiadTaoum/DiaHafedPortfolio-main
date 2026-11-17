@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" role="img" aria-labelledby="t d">
+  <title id="t">Courtyard House sample floor plan</title>
+  <desc id="d">Original sample plan: eight spaces arranged around a central planted courtyard. Replace with Dia's own plan.</desc>
+  <defs>
+    <pattern id="g" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="#59685D" stroke-opacity=".13"/></pattern>
+    <pattern id="h" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V10" stroke="#6f8a62" stroke-opacity=".55" stroke-width="2"/></pattern>
+  </defs>
+  <rect width="1000" height="700" fill="#EFEBE1"/><rect width="1000" height="700" fill="url(#g)"/>
+  <!-- room tints -->
+  <rect x="100" y="100" width="320" height="150" fill="#F6F1E6"/>
+  <rect x="420" y="100" width="480" height="150" fill="#F3EBDD"/>
+  <rect x="100" y="250" width="300" height="200" fill="#EFE8DA"/>
+  <rect x="600" y="250" width="300" height="200" fill="#F6F1E6"/>
+  <rect x="100" y="450" width="200" height="150" fill="#E9E2D3"/>
+  <rect x="300" y="450" width="180" height="150" fill="#DCE3E0"/>
+  <rect x="480" y="450" width="420" height="150" fill="#E4DCCB"/>
+  <!-- courtyard -->
+  <rect x="400" y="250" width="200" height="200" fill="#CFDCC4"/><rect x="400" y="250" width="200" height="200" fill="url(#h)"/>
+  <circle cx="500" cy="350" r="52" fill="#7E9A6E" fill-opacity=".85"/><circle cx="500" cy="350" r="8" fill="#4A3F32"/>
+  <!-- walls -->
+  <g fill="none" stroke="#2F3B33" stroke-width="9" stroke-linejoin="miter">
+    <path d="M100 100H900V600H100Z"/>
+    <path d="M420 100V250M100 250H400V450H100M300 450V600M480 450V600M600 250H900M400 250V450M600 250V450M400 450H480M600 450H900"/>
+  </g>
+  <!-- door gaps and swings -->
+  <g fill="#EFEBE1"><rect x="150" y="591" width="80" height="18"/><rect x="391" y="300" width="18" height="70"/><rect x="591" y="300" width="18" height="70"/><rect x="241" y="441" width="70" height="18"/><rect x="571" y="241" width="70" height="18"/></g>
+  <g fill="none" stroke="#2F3B33" stroke-width="2"><path d="M150 600A80 80 0 0 1 230 520M391 300A70 70 0 0 0 321 370"/></g>
+  <!-- veranda columns -->
+  <g fill="#2F3B33"><circle cx="560" cy="592" r="7"/><circle cx="660" cy="592" r="7"/><circle cx="760" cy="592" r="7"/><circle cx="860" cy="592" r="7"/></g>
+  <!-- windows -->
+  <g stroke="#6C8FA6" stroke-width="6"><path d="M160 100H340M520 100H840M900 330V400M100 300V400"/></g>
+  <!-- scale bar + north -->
+  <g font-family="Arial,sans-serif" fill="#2F3B33" font-size="13" letter-spacing="2">
+    <path d="M100 650H300M100 642V658M200 642V658M300 642V658" stroke="#2F3B33" stroke-width="2"/>
+    <text x="100" y="634">0</text><text x="192" y="634">2</text><text x="292" y="634">4 M</text>
+    <text x="640" y="660">SAMPLE PLAN — GROUND FLOOR 1:100</text>
+    <circle cx="930" cy="150" r="22" fill="none" stroke="#2F3B33" stroke-width="2"/><path d="M930 132l8 26-8-6-8 6z" fill="#2F3B33"/><text x="924" y="188">N</text>
+  </g>
+</svg>

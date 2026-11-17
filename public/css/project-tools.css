@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Project page tools: section-cut slider + click-through floor plan.
+   Colours come from the site's theme variables, so the admin palette and
+   blueprint mode both restyle these automatically.
+   ========================================================================== */
+
+.cut-compare,.plan-explorer{margin:55px 0 64px;padding:clamp(18px,4vw,48px);background:var(--surface);border:1px solid var(--line)}
+.tool-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.tool-heading h2{margin-top:10px;font-size:clamp(30px,4vw,52px)}
+.tool-heading>p{font-size:12px;letter-spacing:.04em;white-space:nowrap}
+
+/* ---------------- Section cut ---------------- */
+.cut-stage{--p:50%;position:relative;overflow:hidden;aspect-ratio:16/10;max-height:78vh;width:100%;background:#f2efe8;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none;border:1px solid var(--line)}
+.cut-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.cut-over{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.cut-line{position:absolute;top:0;bottom:0;left:var(--p);width:0;pointer-events:none;border-left:2px dashed #fff;filter:drop-shadow(0 0 3px rgba(0,0,0,.55))}
+.cut-handle{position:absolute;top:50%;left:0;transform:translate(-50%,-50%);display:grid;place-items:center;min-width:76px;height:40px;padding:0 14px;border-radius:30px;background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:.14em;white-space:nowrap;filter:none;box-shadow:0 8px 24px -8px rgba(0,0,0,.6);transition:transform .25s}
+.cut-stage.is-dragging .cut-handle{transform:translate(-50%,-50%) scale(1.12)}
+.cut-label{position:absolute;bottom:16px;padding:7px 11px;background:#f3f1ebed;color:#23211f;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;pointer-events:none;transition:opacity .25s}
+.cut-label-left{left:16px}.cut-label-right{right:16px}
+.cut-stage.hide-left .cut-label-left,.cut-stage.hide-right .cut-label-right{opacity:0}
+/* the real, accessible control: invisible, but focusable and keyboard-operable */
+.cut-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;pointer-events:none}
+.cut-stage:has(.cut-range:focus-visible){outline:3px solid var(--focus);outline-offset:4px}
+
+/* the site's global img{display:block} would otherwise defeat the hidden attribute */
+.plan-explorer [hidden],.cut-compare [hidden]{display:none!important}
+
+/* ---------------- Floor plan ---------------- */
+.plan-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.plan-stage{position:relative;background:#f2efe8;border:1px solid var(--line);line-height:0}
+.plan-stage>img{display:block;width:100%;height:auto;pointer-events:none;user-select:none}
+.plan-room{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);width:calc(var(--w) * 1%);height:calc(var(--h) * 1%);padding:0;border:2px solid transparent;background:transparent;cursor:pointer;transition:background-color .25s,border-color .25s,box-shadow .25s}
+.plan-room:hover,.plan-room:focus-visible{background:color-mix(in srgb,var(--orange) 26%,transparent);border-color:color-mix(in srgb,var(--orange) 80%,transparent)}
+.plan-room:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.plan-room.is-active{background:color-mix(in srgb,var(--orange) 38%,transparent);border-color:#23211f;box-shadow:inset 0 0 0 2px #fff,0 0 0 0 color-mix(in srgb,var(--orange) 60%,transparent);animation:plan-pulse 1.8s ease-out 1}
+.plan-room-tag{position:absolute;left:6px;top:6px;display:grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:12px;background:#23211f;color:#fff;font:600 11px/1 "Segoe UI",Arial,sans-serif;letter-spacing:.05em;transition:background-color .25s,transform .25s}
+.plan-room:hover .plan-room-tag,.plan-room.is-active .plan-room-tag{background:var(--orange);color:#fff;transform:scale(1.12)}
+@keyframes plan-pulse{0%{box-shadow:inset 0 0 0 2px #fff,0 0 0 0 color-mix(in srgb,var(--orange) 70%,transparent)}100%{box-shadow:inset 0 0 0 2px #fff,0 0 0 22px transparent}}
+
+.plan-panel{position:sticky;top:110px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.plan-empty p{margin-top:12px;font-size:15px}
+.plan-detail{animation:plan-in .45s cubic-bezier(.2,.7,.2,1)}
+.plan-detail[hidden],.plan-empty[hidden]{display:none}
+@keyframes plan-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.plan-number{display:block;font:400 clamp(52px,6vw,84px)/1 Georgia,"Times New Roman",serif;letter-spacing:-.05em;color:var(--orange);font-variant-numeric:tabular-nums}
+.plan-detail h3{margin:8px 0 10px;font-size:clamp(26px,3vw,36px)}
+.plan-detail>p{margin-top:14px;font-size:15px;max-width:46ch}
+.plan-photo{margin-top:18px;width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line)}
+.plan-controls{display:flex;align-items:center;gap:10px}
+.plan-controls button{min-height:44px;min-width:44px;padding:0 16px;border:1px solid var(--ink);border-radius:30px;background:transparent;color:var(--ink);cursor:pointer;font-size:13px;letter-spacing:.06em;transition:background-color .2s,color .2s}
+.plan-controls button:hover,.plan-play[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.plan-play{flex:1}
+.plan-index{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.plan-index button{display:flex;gap:14px;align-items:baseline;width:100%;padding:11px 4px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font-size:14px;text-align:left;cursor:pointer;transition:padding .25s,color .25s}
+.plan-index button span{font-size:11px;letter-spacing:.1em;color:var(--muted);font-variant-numeric:tabular-nums}
+.plan-index button:hover{padding-left:12px}
+.plan-index button.is-active{padding-left:12px;color:var(--orange);font-weight:600}
+
+@media(max-width:850px){
+  .plan-layout{grid-template-columns:1fr}
+  .plan-panel{position:static}
+  .tool-heading{flex-direction:column;align-items:flex-start;gap:10px}
+  .tool-heading>p{white-space:normal}
+  .cut-stage{aspect-ratio:4/3}
+}
+@media(max-width:600px){
+  .cut-compare,.plan-explorer{margin:34px 0;padding:16px}
+  .cut-handle{min-width:64px;height:36px}
+  .plan-room-tag{left:3px;top:3px;min-width:20px;height:20px;font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .plan-detail{animation:none}
+  .plan-room.is-active{animation:none}
+}
+
+/* blueprint mode: the drafting-blue accent is too dark for text on navy */
+body.blueprint .plan-number,body.blueprint .plan-index button.is-active{color:#9cc2ff}

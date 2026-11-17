@@ -1,0 +1,177 @@
+.offline-flipbook {
+  max-width: 1180px;
+  margin: 48px auto 0;
+}
+
+.offline-flipbook-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.offline-flipbook-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.offline-flipbook-controls button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.offline-flipbook-controls button:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--light);
+}
+
+.offline-flipbook-controls button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.offline-flipbook-progress {
+  width: min(100%, 920px);
+  height: 4px;
+  margin: 15px auto 22px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.offline-flipbook-progress span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--orange);
+  transition: width 0.25s ease;
+}
+
+.offline-flipbook-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: min(72svh, 700px);
+  min-height: 400px;
+  padding: clamp(12px, 3vw, 34px);
+  border: 1px solid #aa9b83;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 50% 45%, #e6dccb 0, #cfc1aa 68%, #b5a58b 100%);
+  box-shadow: 0 24px 60px #23211f20, inset 0 1px #fff9;
+  overflow: hidden;
+}
+
+/* CRITICAL FIX: Never set both width: 100% and height: 100% on .offline-flipbook-book!
+   Instead, lock its aspect-ratio to 2 pages (640 / 300) and fit it inside the stage */
+.offline-flipbook-book,
+.offline-flipbook-stage .stf__parent {
+  width: auto !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 640 / 300 !important;
+  margin: 0 auto !important;
+}
+
+.offline-flipbook-book .stf__wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Remove solid background on .stf__block so it doesn't mask container size mismatches */
+.offline-flipbook-book .stf__block {
+  background: transparent;
+}
+
+.offline-flipbook-page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #fffefa;
+  margin: 0;
+  border: none;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.offline-flipbook-page img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.offline-page-number {
+  position: absolute;
+  right: 5%;
+  bottom: 3%;
+  z-index: 2;
+  color: #625b50;
+  font: 11px/1 Georgia, serif;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px #fff;
+}
+
+.offline-flipbook-hint {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .offline-flipbook {
+    margin-top: 32px;
+  }
+  .offline-flipbook-toolbar {
+    padding: 10px 12px;
+  }
+  .offline-flipbook-controls {
+    gap: 8px;
+    font-size: 11px;
+  }
+  .offline-flipbook-controls button {
+    width: 38px;
+    height: 38px;
+  }
+  .offline-flipbook-stage {
+    height: 64svh;
+    min-height: 340px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .offline-page-number {
+    font-size: 9px;
+  }
+  .offline-flipbook-hint {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offline-flipbook-progress span {
+    transition: none;
+  }
+}

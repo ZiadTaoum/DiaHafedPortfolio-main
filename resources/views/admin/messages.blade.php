@@ -1,0 +1,6 @@
+@extends('admin.layout')
+@section('title','Message inbox')
+@section('content')
+<div class="page-title"><div><p class="eyebrow">NEW CONVERSATIONS START HERE</p><h1>Message inbox.</h1><p>Enquiries sent through your portfolio. Use Reply to open your email app.</p></div></div>
+@forelse($messages as $message)<article class="panel message"><div class="panel-heading"><div><h2>{{ $message->name }}</h2><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></div><span class="badge">{{ $message->read_at ? 'Read' : 'Unread' }}</span></div><div class="form-body"><small>{{ $message->created_at->format('M j, Y · H:i') }} UTC</small><p class="message-body">{{ $message->message }}</p><div class="form-actions"><a class="button primary" href="mailto:{{ $message->email }}">Reply ↗</a>@unless($message->read_at)<form action="{{ route('admin.messages.read',$message) }}" method="post">@csrf @method('PATCH')<button class="button">Mark as read</button></form>@endunless<form action="{{ route('admin.messages.destroy',$message) }}" method="post" data-confirm="Delete this message permanently?">@csrf @method('DELETE')<button class="link danger">Delete</button></form></div></div></article>@empty<div class="panel empty"><h2>No messages yet.</h2><p>Project enquiries will appear here.</p></div>@endforelse<div class="pagination">{{ $messages->links() }}</div>
+@endsection

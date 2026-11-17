@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+  <title id="title">Residential architecture placeholder</title><desc id="desc">Abstract residential facade study; replace with a real portfolio project.</desc>
+  <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#59685D" stroke-opacity=".16"/></pattern></defs>
+  <rect width="900" height="650" fill="#E6E0D4"/><rect width="900" height="650" fill="url(#grid)"/>
+  <circle cx="710" cy="145" r="66" fill="#B99A72" opacity=".65"/>
+  <path d="M104 505V300l188-130 178 130v205Z" fill="#F3F0E8" stroke="#35443B" stroke-width="6"/><path d="m75 305 217-157 208 157" fill="none" stroke="#35443B" stroke-width="8"/>
+  <path d="M150 504V330h82v174m88 0V330h82v174" fill="#C0C7BD" stroke="#35443B" stroke-width="5"/><path d="M150 390h82m88 0h82" stroke="#F3F0E8" stroke-width="6"/>
+  <path d="M500 504h266m-238-35h238m-208-36h208" stroke="#A67C52" stroke-width="3"/>
+  <path d="M104 535h666" stroke="#35443B" stroke-width="4"/><text x="65" y="585" font-family="Arial,sans-serif" font-size="15" letter-spacing="2" fill="#35443B">RESIDENTIAL STUDY / PLACEHOLDER</text>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+  <title id="title">Speculative material and light study</title><desc id="desc">Original sample illustration of a material research room with brick, timber, and translucent panels.</desc>
+  <defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#59685D" stroke-opacity=".13"/></pattern><pattern id="brick" width="70" height="34" patternUnits="userSpaceOnUse"><path d="M0 0h70M0 17h70M35 0v17M0 17v17" fill="none" stroke="#F1D9C6" stroke-width="2" opacity=".8"/></pattern></defs>
+  <rect width="900" height="650" fill="#E7E1D5"/><rect width="900" height="650" fill="url(#grid)"/>
+  <path d="M100 505V155h700v350" fill="#F4F0E7" stroke="#35443B" stroke-width="6"/><path d="M100 155h700v350H100Z" fill="url(#brick)" opacity=".75"/>
+  <path d="M178 505V230h190v275" fill="#B87658" stroke="#35443B" stroke-width="5"/><path d="M178 230h190v275H178Z" fill="url(#brick)"/>
+  <path d="M430 505V196h225v309" fill="#D7E0D9" fill-opacity=".78" stroke="#35443B" stroke-width="5"/><path d="M485 196v309m58-309v309m57-309v309" stroke="#F9F5EC" stroke-width="8"/>
+  <path d="M368 258 658 440v65H368Z" fill="#D9B982" fill-opacity=".3"/><path d="M650 505V165m-22 340h48" stroke="#765C43" stroke-width="12"/>
+  <path d="M100 530h700" stroke="#35443B" stroke-width="4"/><text x="64" y="585" font-family="Arial,sans-serif" font-size="15" letter-spacing="2" fill="#35443B">MATERIAL / MEMORY / SAMPLE STUDY</text>
+</svg>

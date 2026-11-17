@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\{Section, PortfolioItem, ContactMessage};
+use App\Mail\ContactFormSubmission;
 use App\Support\PortfolioAnalytics;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 class PortfolioController extends Controller {
     public function index(Request $request, PortfolioAnalytics $analytics) {
         $analytics->record($request);
@@ -15,9 +17,13 @@ class PortfolioController extends Controller {
         return view('portfolio.project', ['project'=>$project,'settings'=>Section::where('key','settings')->first()?->data ?? []]);
     }
     public function contact(Request $request) {
-        abort_unless(Section::where('type','contact')->where('is_visible',true)->exists(),404);
+        $section=Section::where('type','contact')->where('is_visible',true)->first();
+        abort_unless($section,404);
         $data=$request->validate(['name'=>'required|string|max:150','email'=>'required|email|max:255','message'=>'required|string|min:10|max:10000','website'=>'nullable|max:0']);
-        ContactMessage::create(collect($data)->only(['name','email','message'])->all());
-        return redirect(route('home').'#'.Section::where('type','contact')->first()->key)->with('contact_success',Section::where('type','contact')->first()?->data['success_message'] ?? 'Thank you. Your message has been received.');
+        $recipient=trim((string) (config('mail.contact_to') ?: ($section->data['email'] ?? '')));
+        abort_unless(filter_var($recipient,FILTER_VALIDATE_EMAIL),503,'Contact email delivery is not configured.');
+        $message=ContactMessage::create(collect($data)->only(['name','email','message'])->all());
+        Mail::to($recipient)->send(new ContactFormSubmission($message));
+        return redirect(route('home').'#'.$section->key)->with('contact_success',$section->data['success_message'] ?? 'Thank you. Your message has been received.');
     }
 }

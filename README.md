@@ -35,9 +35,13 @@ Open **Website content** in the dashboard. Each section has its own form for tex
 - **About:** biography, portrait and image description.
 - **Services, experience, education, skills:** edit section headings and manage individual entries.
 - **Contact:** email, phone, location, social links, form heading and response text.
-- **Message inbox:** read and delete enquiries; Reply opens your email application. Messages are saved in the database; automatic email delivery is not configured.
+- **Message inbox:** read and delete enquiries; Reply opens your email application. Contact form submissions are saved in the database and emailed to `CONTACT_TO_EMAIL`, falling back to the email address in the Contact section. The visitor's address is set as Reply-To.
 - **Analytics:** review unique browsing sessions, page views, pages per visitor, bounce rate, active visitors, inquiries, daily trends, popular pages, referrers, devices, and browsers over 7, 30, or 90 days. Tracking covers homepage and project-detail views; administrators and obvious bots are excluded. Session IDs are one-way hashed, IP addresses and query strings are not stored, and referrers are reduced to host names.
 - **Your account:** update administrator name, email and password, with current-password verification.
+
+### Contact form email
+
+Configure a real mail transport in `.env` before expecting inbox delivery. For SMTP, set `MAIL_MAILER=smtp`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, and `MAIL_FROM_ADDRESS` to the values supplied by your email provider. Set `CONTACT_TO_EMAIL` to override the recipient; otherwise the Contact section's email address is used. Do not use the `log` mailer for delivery: it writes messages to the application log instead. After changing mail settings, run `php artisan config:clear`.
 
 Upload JPG, PNG or WebP images (10 MB each), PDF documents (30 MB), and GLB 3D models (50 MB). Uploaded files use generated names under `storage/app/private/uploads` and are served through a constrained `/media/uploads/{filename}` route. Uploaded portfolio media is public. Replacing a file or deleting a project keeps the old physical file so shared references do not break. Remove unused uploads manually only after checking their references.
 

@@ -1,10 +1,11 @@
 <?php
 namespace Tests\Feature;
 use App\Models\{User,Section,PortfolioItem,ContactMessage,AnalyticsVisit};
+use App\Mail\ContactFormSubmission;
 use Database\Seeders\PortfolioSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\{Storage,Hash};
+use Illuminate\Support\Facades\{Storage,Hash,Mail};
 use Tests\TestCase;
 class PortfolioTest extends TestCase {
     use RefreshDatabase;
@@ -166,11 +167,21 @@ class PortfolioTest extends TestCase {
         $this->put('/admin/sections/'.$hero->id,$this->values($hero,['data'=>$data]))->assertSessionHasErrors('data.cta_url');
     }
     public function test_contact_validates_saves_and_admin_manages_message(): void {
+        Mail::fake();config(['mail.contact_to'=>'owner@example.com']);
         $this->post('/contact',['name'=>'Visitor','email'=>'bad','message'=>'short'])->assertSessionHasErrors(['email','message']);
         $this->post('/contact',['name'=>'Visitor','email'=>'visitor@example.com','message'=>'I would like a brand identity.'])->assertSessionHas('contact_success');
-        $message=ContactMessage::firstOrFail();$this->actingAs($this->admin());$this->get('/admin/messages')->assertOk()->assertSee('Visitor');
+        $message=ContactMessage::firstOrFail();
+        Mail::assertSent(ContactFormSubmission::class,fn($mail)=>$mail->hasTo('owner@example.com')&&$mail->hasReplyTo('visitor@example.com')&&$mail->contactMessage->message==='I would like a brand identity.');
+        $this->actingAs($this->admin());$this->get('/admin/messages')->assertOk()->assertSee('Visitor');
         $this->patch('/admin/messages/'.$message->id)->assertRedirect();$this->assertNotNull($message->fresh()->read_at);
         $this->delete('/admin/messages/'.$message->id)->assertRedirect();$this->assertDatabaseCount('contact_messages',0);
+    }
+    public function test_contact_requires_a_valid_recipient_address(): void {
+        config(['mail.contact_to'=>null]);
+        $section=Section::where('type','contact')->firstOrFail();
+        $section->update(['data'=>[...$section->data,'email'=>'']]);
+        $this->post('/contact',['name'=>'Visitor','email'=>'visitor@example.com','message'=>'I would like a brand identity.'])->assertServiceUnavailable();
+        $this->assertDatabaseCount('contact_messages',0);
     }
     public function test_account_password_change_requires_current_password(): void {
         $user=$this->admin();$this->actingAs($user);

@@ -109,17 +109,18 @@ body.blueprint .sun-disc{filter:saturate(.85)}
 .contact-form input,.contact-form textarea{transition:border-color .3s,box-shadow .3s}
 .contact-form input:focus,.contact-form textarea:focus{outline:none;border-bottom-color:var(--orange);box-shadow:0 2px 0 0 var(--orange)}
 
+/* ---------- Reduced motion: switch it all off ---------- */
+@media(prefers-reduced-motion:reduce){
+  .alive .hero-art{transform:rotate(3deg)}
+  .section-hero h1 .w>span{transform:none!important;transition:none!important}
+  .alive-progress{display:none}
+}
+
 /* ---------- Touch & small screens ---------- */
 @media(max-width:600px){
+  .alive .hero-art{transform:none;transition:none;will-change:auto}
   .sun-ctl{margin-top:26px}
   .bp-toggle{left:12px;bottom:12px;padding:9px 13px}
   .hero-coords{display:none}
 }
 @media(hover:none){.alive-cursor{display:none}}
-
-/* ---------- Reduced motion: switch it all off ---------- */
-@media(prefers-reduced-motion:reduce){
-  .alive .hero-art{transform:rotate(3deg)!important}
-  .section-hero h1 .w>span{transform:none!important;transition:none!important}
-  .alive-progress{display:none}
-}

@@ -2,12 +2,16 @@
 @section('title', $project->title.' — '.($settings['name'] ?? 'Portfolio'))
 @section('content')
 @php
-	$galleryPages = array_values(array_unique(array_filter(array_map('trim', preg_split('/\R/', (string) ($project->data['gallery'] ?? ''))))));
-	$cover = trim((string) ($project->data['image'] ?? ''));
+	$show = fn ($part) => $project->data['visibility'][$part] ?? true;
+	$galleries = array_values(array_filter(\App\Support\ProjectSections::galleries($project->data ?? []), fn ($gallery) => $gallery['visible'] && $gallery['images']));
+	$galleryPages = array_column($galleries[0]['images'] ?? [], 'path');
+	$cover = $show('cover') ? trim((string) ($project->data['image'] ?? '')) : '';
 	$magazinePages = $cover !== ''
 		? array_merge([$cover], array_values(array_filter($galleryPages, fn ($path) => $path !== $cover)))
 		: $galleryPages;
-	$isMagazine = strtolower($project->data['category'] ?? '') === 'editorial';
+	$isEditorial = in_array(strtolower(trim($project->data['category'] ?? '')), ['editorial', 'magazine'], true);
+	$showFlipbook = $show('flipbook') && $isEditorial && count($magazinePages);
+	$flipbookGallery = $showFlipbook ? array_shift($galleries) : null;
 	$pageWidth = isset($project->data['page_width']) && is_numeric($project->data['page_width']) ? max(100, min(500, (int) $project->data['page_width'])) : 320;
 	$planImage = trim((string) ($project->data['plan_image'] ?? ''));
 	$planRooms = $planImage !== '' ? \App\Support\PlanRooms::parse($project->data['plan_rooms'] ?? '') : [];
@@ -20,18 +24,18 @@
 <section class="section project-detail">
 	<a class="text-link" href="{{ route('home') }}#{{ $project->section->key }}">← Back to selected work</a>
 	<div class="section-heading">
-		<div><span class="eyebrow">{{ $project->data['category'] ?? '' }} / {{ $project->data['year'] ?? '' }}</span><h1>{{ $project->title }}</h1></div>
-		<p>{{ $project->subtitle }}<br>{{ $project->data['location'] ?? '' }}</p>
+		<div>@if($show('details'))<span class="eyebrow">{{ $project->data['category'] ?? '' }} / {{ $project->data['year'] ?? '' }}</span>@endif<h1>{{ $project->title }}</h1></div>
+		@if($show('details'))<p>{{ $project->subtitle }}<br>{{ $project->data['location'] ?? '' }}</p>@endif
 	</div>
-	<div class="project-description prose">{{ $project->body }}</div>
-	@if(!empty($project->data['model_url']))
+	@if($show('description'))<div class="project-description prose">{{ $project->body }}</div>@endif
+	@if($show('model') && !empty($project->data['model_url']))
 		<div class="maquette-detail">
 			<div class="maquette-heading"><div><span class="eyebrow">Interactive model</span><h2>Explore the maquette</h2></div><p>Drag to orbit · Scroll to zoom</p></div>
 			<model-viewer class="maquette-viewer" data-model-viewer src="{{ $project->data['model_url'] }}" @if($cover !== '')poster="{{ $cover }}"@endif alt="Interactive 3D maquette of {{ $project->title }}" camera-controls auto-rotate shadow-intensity="1" exposure="1" ar ar-modes="webxr scene-viewer quick-look" loading="lazy" reveal="interaction"><span class="model-hint" slot="progress-bar">Preparing the model…</span><button class="ar-button" slot="ar-button" type="button">View in your space ↗</button></model-viewer>
 		</div>
 	@endif
 
-	@if($cutBefore !== '' && $cutAfter !== '')
+	@if($show('cut') && $cutBefore !== '' && $cutAfter !== '')
 		<div class="cut-compare" data-cut>
 			<div class="tool-heading"><div><span class="eyebrow">Section cut</span><h2>Slice through the design</h2></div><p>Drag the line · or use ← → on the slider</p></div>
 			<div class="cut-stage" data-cut-stage>
@@ -44,7 +48,7 @@
 		</div>
 	@endif
 
-	@if($planImage !== '' && count($planRooms))
+	@if($show('plan') && $planImage !== '' && count($planRooms))
 		<div class="plan-explorer" data-plan>
 			<div class="tool-heading"><div><span class="eyebrow">Interactive plan</span><h2>Walk through the plan</h2></div><p>Tap or click a room · or press Play tour</p></div>
 			<div class="plan-layout">
@@ -70,10 +74,10 @@
 		</div>
 	@endif
 
-	@if($isMagazine && count($magazinePages))
+	@if($showFlipbook)
 		<div class="offline-flipbook" data-offline-flipbook data-page-width="{{ $pageWidth }}" data-page-height="{{ $pageHeight }}" data-title="{{ $project->title }}" aria-label="{{ $project->title }} image flipbook">
 			<div class="offline-flipbook-toolbar">
-				<span class="eyebrow">{{ $project->title }}</span>
+				<span class="eyebrow">{{ ($flipbookGallery['title'] ?? '') ?: $project->title }}</span>
 				<div class="offline-flipbook-controls">
 					<span data-pageflip-count aria-live="polite">Page 1 of {{ count($magazinePages) }}</span>
 					<button type="button" data-pageflip-prev aria-label="Previous page" disabled>←</button>
@@ -96,9 +100,21 @@
 		@vite('resources/js/flipbook.js')
 	@else
 		@if($cover !== '')<button class="detail-image-trigger detail-cover-trigger" type="button" data-gallery-open data-gallery-src="{{ $cover }}" data-gallery-alt="{{ $project->data['image_alt'] ?? $project->title }}" aria-label="Inspect {{ $project->title }} image"><img class="detail-cover" src="{{ $cover }}" alt="{{ $project->data['image_alt'] ?? $project->title }}"><span class="image-inspect-label">Inspect image ↗</span></button>@endif
-		@if(count($galleryPages))<p class="gallery-hint">Click an image to inspect it · use arrows or swipe to browse</p>@endif
-		<div class="gallery">@foreach($galleryPages as $path)<button class="detail-image-trigger" type="button" data-gallery-open data-gallery-src="{{ $path }}" data-gallery-alt="{{ $project->title }} — project artwork {{ $loop->iteration }}" aria-label="Inspect project artwork {{ $loop->iteration }}"><img src="{{ $path }}" alt="{{ $project->title }} — project artwork {{ $loop->iteration }}" loading="lazy"><span class="image-inspect-label">Inspect ↗</span></button>@endforeach</div>
 	@endif
+	@if($galleries)<p class="gallery-hint">Click an image to inspect it · use arrows or swipe to browse</p>@endif
+	@foreach($galleries as $gallery)
+		<div class="project-gallery">
+			@if($gallery['title'] !== '')<h2>{{ $gallery['title'] }}</h2>@endif
+			<div class="gallery">
+				@foreach($gallery['images'] as $image)
+					@php($alt = ($gallery['title'] ?: $project->title).' — image '.$loop->iteration)
+					<button class="detail-image-trigger" type="button" data-gallery-open data-gallery-src="{{ $image['path'] }}" data-gallery-alt="{{ $alt }}" aria-label="Inspect {{ $alt }}">
+						<img src="{{ $image['path'] }}" alt="{{ $alt }}" loading="lazy"><span class="image-inspect-label">Inspect ↗</span>
+					</button>
+				@endforeach
+			</div>
+		</div>
+	@endforeach
 	<dialog class="project-lightbox" data-project-lightbox aria-label="Project image viewer">
 		<button class="lightbox-close" type="button" data-lightbox-close aria-label="Close image viewer">×</button>
 		<button class="lightbox-arrow lightbox-previous" type="button" data-lightbox-previous aria-label="Previous image">←</button>
@@ -107,6 +123,6 @@
 		<button class="lightbox-zoom" type="button" data-lightbox-zoom aria-pressed="false">Zoom in +</button>
 	</dialog>
 	<script src="{{ asset('js/project-gallery.js') }}" defer></script>
-	@if(($cutBefore !== '' && $cutAfter !== '') || count($planRooms))<script src="{{ asset('js/project-tools.js') }}" defer></script>@endif
+	@if(($show('cut') && $cutBefore !== '' && $cutAfter !== '') || ($show('plan') && count($planRooms)))<script src="{{ asset('js/project-tools.js') }}" defer></script>@endif
 </section>
 @endsection

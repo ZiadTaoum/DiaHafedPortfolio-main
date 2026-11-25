@@ -152,7 +152,7 @@ class PortfolioTest extends TestCase {
     }
     public function test_gallery_upload_and_unsafe_links(): void {
         Storage::fake('local');$this->actingAs($this->admin());$item=Section::where('key','projects')->first()->items()->first();
-        $this->get('/admin/items/'.$item->id.'/edit')->assertOk()->assertSee('gallery_image_list')->assertSee('gallery_uploads')->assertSee('Advanced: edit image paths');
+        $this->get('/admin/items/'.$item->id.'/edit')->assertOk()->assertSee('data-gallery-image-list')->assertSee('data-gallery-uploads')->assertSee('Advanced: edit image paths');
         $data=[...$item->data,'gallery'=>"/images/gallery/second.jpg\n/images/gallery/first.jpg"];
         $this->put('/admin/items/'.$item->id,$this->values($item,['data'=>$data,'gallery_uploads'=>[UploadedFile::fake()->image('art-one.jpg'),UploadedFile::fake()->image('art-two.jpg')]]))->assertSessionHasNoErrors();
         $paths=preg_split('/\R/',$item->fresh()->data['gallery']);
@@ -165,6 +165,52 @@ class PortfolioTest extends TestCase {
         $this->assertSame([$paths[3],$paths[0]],preg_split('/\R/',$item->fresh()->data['gallery']));
         $hero=Section::where('key','hero')->first();$data=$hero->data;$data['cta_url']='javascript:alert(1)';
         $this->put('/admin/sections/'.$hero->id,$this->values($hero,['data'=>$data]))->assertSessionHasErrors('data.cta_url');
+    }
+    public function test_project_galleries_keep_mixed_image_order_and_respect_visibility(): void
+    {
+        Storage::fake('local');
+        $this->actingAs($this->admin());
+        $item = PortfolioItem::where('title', 'Courtyard House')->firstOrFail();
+        $url = '/admin/items/'.$item->id;
+        $projectUrl = '/projects/'.$item->id;
+
+        $this->get($url.'/edit')->assertOk()->assertSee('Project section visibility')->assertSee('id="preview_thumbnail"', false);
+        $this->put($url, $this->values($item, [
+            'body' => 'Private project description',
+            'data' => [...$item->data, 'visibility' => ['cover' => '0', 'description' => '0']],
+            'edit_galleries' => '1',
+            'galleries' => [
+                ['title' => 'Drawings', 'visible' => '1', 'images' => [
+                    1 => ['path' => '/images/gallery/saved.jpg'],
+                    0 => ['path' => '', 'upload' => UploadedFile::fake()->image('new.jpg')],
+                ]],
+                ['title' => 'Renderings', 'visible' => '1', 'images' => [['path' => '/images/gallery/render.jpg']]],
+                ['title' => 'Private drafts', 'visible' => '0', 'images' => [['path' => '/images/gallery/draft.jpg']]],
+            ],
+        ]))->assertSessionHasNoErrors();
+
+        $item->refresh();
+        $paths = array_column($item->data['galleries'][0]['images'], 'path');
+        $this->assertStringStartsWith('/media/uploads/', $paths[0]);
+        Storage::disk('local')->assertExists(substr($paths[0], strlen('/media/')));
+        $this->assertSame('/images/gallery/saved.jpg', $paths[1]);
+        $this->get($projectUrl)->assertOk()
+            ->assertSeeInOrder(['Drawings', $paths[0], $paths[1], 'Renderings', '/images/gallery/render.jpg'])
+            ->assertDontSee('Private drafts')
+            ->assertDontSee('/images/gallery/draft.jpg')
+            ->assertDontSee('Private project description')
+            ->assertDontSee('detail-cover-trigger', false);
+
+        $data = $item->data;
+        unset($data['galleries']);
+        $this->put($url, $this->values($item, [
+            'data' => $data,
+            'edit_galleries' => '1',
+            'galleries' => [['visible' => '1', 'images' => [['path' => '']]]],
+        ]))->assertSessionHasErrors('galleries.0.images.0.upload');
+        $this->assertCount(3, $item->fresh()->data['galleries']);
+        $this->put($url, $this->values($item, ['data' => $data, 'edit_galleries' => '1']))->assertSessionHasNoErrors();
+        $this->assertSame([], $item->fresh()->data['galleries']);
     }
     public function test_contact_validates_saves_and_admin_manages_message(): void {
         Mail::fake();config(['mail.contact_to'=>'owner@example.com']);

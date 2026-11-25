@@ -22,3 +22,5 @@
 .lightbox-zoom{right:30px;bottom:20px;min-height:42px;padding:0 16px;border-radius:30px;font-size:12px}
 @media(max-width:600px){.image-inspect-label{right:10px;bottom:10px;padding:8px 10px;font-size:9px;opacity:1;transform:none}.project-lightbox{padding:68px 12px 76px}.lightbox-close{top:12px;right:12px;width:42px;height:42px}.lightbox-arrow{top:auto;bottom:13px;width:42px;height:42px;transform:none}.lightbox-previous{left:14px}.lightbox-next{right:14px}.lightbox-zoom{right:calc(50% - 48px);bottom:14px}.lightbox-figure figcaption{font-size:9px}.lightbox-figure.is-zoomed img{width:190%}}
 @media(prefers-reduced-motion:reduce){.detail-image-trigger img,.image-inspect-label,.lightbox-figure img{transition:none}}
+.project-gallery + .project-gallery{margin-top:36px}
+.project-gallery h2{font-size:clamp(26px,4vw,48px)}

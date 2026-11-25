@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Requests;
 use App\Support\PortfolioFields;
+use App\Support\ProjectSections;
 use Illuminate\Foundation\Http\FormRequest;
 class ContentRequest extends FormRequest {
     public function authorize(): bool { return (bool) $this->user()?->is_admin; }
@@ -8,7 +9,9 @@ class ContentRequest extends FormRequest {
         $section = $this->route('section') ?? $this->route('item')?->section;
         $isItem = $this->route('item') || $this->routeIs('admin.items.store');
         $fields = $isItem ? PortfolioFields::item($section->type) : PortfolioFields::section($section->type);
-        $rules = ['title'=>'required|string|max:255', 'subtitle'=>'nullable|string|max:255', 'body'=>'nullable|string|max:20000', 'position'=>'required|integer|min:0|max:10000', 'is_visible'=>'nullable|boolean', 'data'=>['nullable','array:'.implode(',',array_keys($fields))]];
+        $dataKeys = array_keys($fields);
+        if (isset($fields['gallery'])) $dataKeys[] = 'visibility';
+        $rules = ['title'=>'required|string|max:255', 'subtitle'=>'nullable|string|max:255', 'body'=>'nullable|string|max:20000', 'position'=>'required|integer|min:0|max:10000', 'is_visible'=>'nullable|boolean', 'data'=>['nullable','array:'.implode(',', $dataKeys)]];
         foreach ($fields as $key=>$label) {
             $rules['data.'.$key] = ['nullable','string','max:10000'];
             if (in_array($key, ['page_width','page_height'])) $rules['data.'.$key] = ['nullable','integer','min:100','max:500'];
@@ -23,7 +26,22 @@ class ContentRequest extends FormRequest {
                     default => 'nullable|file|mimes:pdf|max:30720',
                 };
             }
-            if ($key === 'gallery') $rules['gallery_uploads.*'] = 'image|mimes:jpg,jpeg,png,webp|max:10240';
+            if ($key === 'gallery') {
+                $rules += [
+                    'gallery_uploads.*' => 'image|mimes:jpg,jpeg,png,webp|max:10240',
+                    'edit_galleries' => 'sometimes|accepted',
+                    'galleries' => 'array',
+                    'galleries.*' => 'array:title,visible,images',
+                    'galleries.*.title' => 'nullable|string|max:255',
+                    'galleries.*.visible' => 'required|boolean',
+                    'galleries.*.images' => 'array',
+                    'galleries.*.images.*' => 'array:path,upload',
+                    'galleries.*.images.*.path' => ['nullable', 'string', 'max:2048', 'regex:~^/(?!/)[a-zA-Z0-9/_\-.]+$~'],
+                    'galleries.*.images.*.upload' => 'required_without:galleries.*.images.*.path|nullable|image|mimes:jpg,jpeg,png,webp|max:10240',
+                    'data.visibility' => 'array:'.implode(',', array_keys(ProjectSections::LABELS)),
+                    'data.visibility.*' => 'boolean',
+                ];
+            }
         }
         return $rules;
     }

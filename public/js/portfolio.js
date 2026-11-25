@@ -17,101 +17,39 @@ if (projectCategory && magazineFields) {
   updateMagazineFields();
 }
 
-document.querySelectorAll('[data-clear-media]').forEach(button => button.addEventListener('click', () => {
+document.querySelectorAll('[data-clear-media]').forEach(button => {
   const field = button.dataset.clearMedia;
   const path = document.getElementById(`data_${field}`);
   const upload = document.getElementById(`upload_${field}`);
   const preview = document.getElementById(path.dataset.previewId);
-  path.value = '';
-  if (upload) upload.value = '';
-  if (preview) preview.remove();
-  button.disabled = true;
-  button.textContent = 'Removed — save to apply';
-}));
+  let objectUrl;
 
-const galleryUpload = document.querySelector('#gallery_uploads');
-if (galleryUpload) {
-  const galleryEditor = document.querySelector('#data_gallery');
-  const galleryList = document.querySelector('#gallery_image_list');
-  const selectedFiles = [];
-  let previewUrls = [];
-  let galleryPaths = galleryEditor.value.split(/\r?\n/).map(path => path.trim()).filter(Boolean);
-  const syncUploadFiles = () => {
-    const transfer = new DataTransfer();
-    selectedFiles.forEach(file => transfer.items.add(file));
-    galleryUpload.files = transfer.files;
-  };
-  const renderGallery = () => {
-    previewUrls.forEach(url => URL.revokeObjectURL(url));
-    previewUrls = [];
-    galleryEditor.value = galleryPaths.join('\n');
-    galleryList.replaceChildren();
-    const addCard = (src, label, onRemove, index, total) => {
-      const card = document.createElement('article');
-      card.className = 'gallery-image-card';
-      const image = document.createElement('img');
-      image.src = src;
-      image.alt = label;
-      image.loading = 'lazy';
-      const caption = document.createElement('span');
-      caption.className = 'gallery-image-name';
-      caption.textContent = label;
-      const actions = document.createElement('div');
-      actions.className = 'gallery-image-actions';
-      const makeButton = (text, accessibleName, action, disabled = false) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = text;
-        button.setAttribute('aria-label', accessibleName);
-        button.disabled = disabled;
-        button.addEventListener('click', action);
-        actions.append(button);
-      };
-      if (typeof index === 'number') {
-        makeButton('↑', `Move ${label} up`, () => {
-          [galleryPaths[index - 1], galleryPaths[index]] = [galleryPaths[index], galleryPaths[index - 1]];
-          renderGallery();
-        }, index === 0);
-        makeButton('↓', `Move ${label} down`, () => {
-          [galleryPaths[index + 1], galleryPaths[index]] = [galleryPaths[index], galleryPaths[index + 1]];
-          renderGallery();
-        }, index === total - 1);
-      }
-      makeButton('Remove', `Remove ${label}`, onRemove);
-      card.append(image, caption, actions);
-      galleryList.append(card);
-    };
-    galleryPaths.forEach((path, index) => addCard(path, path.split('/').pop() || `Image ${index + 1}`, () => {
-      galleryPaths.splice(index, 1);
-      renderGallery();
-    }, index, galleryPaths.length));
-    selectedFiles.forEach((file, index) => {
-      const previewUrl = URL.createObjectURL(file);
-      previewUrls.push(previewUrl);
-      addCard(previewUrl, `${file.name} (will be added on save)`, () => {
-        selectedFiles.splice(index, 1);
-        syncUploadFiles();
-        renderGallery();
-      });
-    });
-    if (!galleryPaths.length && !selectedFiles.length) {
-      const empty = document.createElement('p');
-      empty.className = 'gallery-empty';
-      empty.textContent = 'No gallery images yet. Add images using the picker below.';
-      galleryList.append(empty);
+  const update = () => {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = preview instanceof HTMLImageElement && upload.files[0]
+      ? URL.createObjectURL(upload.files[0])
+      : undefined;
+    const source = objectUrl || path.value.trim();
+    const localPath = /^\/(?!\/)[a-zA-Z0-9/_\-.]+$/.test(source);
+    if (preview) {
+      preview.hidden = !objectUrl && !localPath;
+      const attribute = preview instanceof HTMLImageElement ? 'src' : 'href';
+      if (preview.hidden) preview.removeAttribute(attribute);
+      else preview.setAttribute(attribute, source);
     }
+    button.disabled = !path.value && !upload.files.length;
   };
-  galleryUpload.addEventListener('change', () => {
-    for (const file of galleryUpload.files) {
-      if (!selectedFiles.some(selected => selected.name === file.name && selected.size === file.size && selected.lastModified === file.lastModified)) {
-        selectedFiles.push(file);
-      }
-    }
-    syncUploadFiles();
-    renderGallery();
+
+  path.addEventListener('input', update);
+  upload.addEventListener('change', update);
+  button.addEventListener('click', () => {
+    path.value = '';
+    upload.value = '';
+    path.dispatchEvent(new Event('input', { bubbles: true }));
+    upload.dispatchEvent(new Event('change', { bubbles: true }));
   });
-  renderGallery();
-}
+  update();
+});
 
 document.querySelectorAll('[data-flipbook]').forEach(reader => {
   const sources = [...reader.querySelectorAll('[data-flipbook-src]')].map(image => ({ src: image.dataset.flipbookSrc, alt: image.alt, doubleSpread: image.dataset.doubleSpread === 'true' }));

@@ -6,6 +6,7 @@ use App\Support\PortfolioFields;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth,Hash};
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Http\UploadedFile;
 class AdminController extends Controller {
     public function login() { return view('admin.login'); }
     public function authenticate(Request $request) {
@@ -21,7 +22,17 @@ class AdminController extends Controller {
     public function createItem(Section $section) { abort_if($section->type==='settings',404); return view('admin.edit',['section'=>$section,'record'=>new PortfolioItem(['position'=>$section->items()->max('position')+1,'is_visible'=>true]),'fields'=>PortfolioFields::item($section->type),'isItem'=>true]); }
     public function storeItem(ContentRequest $request, Section $section) { abort_if($section->type==='settings',404); $item=$section->items()->create($this->content($request)); return redirect()->route('admin.items.edit',$item)->with('status','Item added.'); }
     public function editItem(PortfolioItem $item) { return view('admin.edit',['section'=>$item->section,'record'=>$item,'fields'=>PortfolioFields::item($item->section->type),'isItem'=>true]); }
-    public function updateItem(ContentRequest $request, PortfolioItem $item) { $item->update($this->content($request)); return back()->with('status','Item saved.'); }
+    public function updateItem(ContentRequest $request, PortfolioItem $item) {
+        $values = $this->content($request);
+        if ($item->section->type === 'projects') {
+            if (!$request->validated('edit_galleries') && !array_key_exists('gallery', $values['data'])) {
+                $values['data'] += array_intersect_key($item->data ?? [], array_flip(['gallery', 'galleries']));
+            }
+            $values['data'] += array_intersect_key($item->data ?? [], ['visibility' => true]);
+        }
+        $item->update($values);
+        return back()->with('status','Item saved.');
+    }
     public function deleteItem(PortfolioItem $item) { $section=$item->section; $item->delete(); return redirect()->route('admin.sections.edit',$section)->with('status','Item deleted.'); }
     private function content(ContentRequest $request): array {
         $values=collect($request->validated())->only(['title','subtitle','body','position','data'])->all();
@@ -34,6 +45,27 @@ class AdminController extends Controller {
             $paths=array_filter(preg_split('/\R/',$values['data']['gallery']??''));
             foreach ($request->file('gallery_uploads') as $file) $paths[]='/media/'.$file->store('uploads','local');
             $values['data']['gallery']=implode("\n",$paths);
+        }
+        if ($request->validated('edit_galleries')) {
+            unset($values['data']['gallery']);
+            $values['data']['galleries'] = [];
+            foreach ($request->validated('galleries', []) as $gallery) {
+                $images = [];
+                $entries = $gallery['images'] ?? [];
+                ksort($entries, SORT_NUMERIC);
+                foreach ($entries as $image) {
+                    $file = $image['upload'] ?? null;
+                    $path = $file instanceof UploadedFile
+                        ? '/media/'.$file->store('uploads', 'local')
+                        : ($image['path'] ?? null);
+                    if ($path) $images[] = ['path' => $path];
+                }
+                $values['data']['galleries'][] = [
+                    'title' => $gallery['title'] ?? '',
+                    'visible' => (bool) $gallery['visible'],
+                    'images' => $images,
+                ];
+            }
         }
         return $values;
     }
